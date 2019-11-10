@@ -1057,7 +1057,7 @@ class {$migration_name}
 }
 MIGRATION;
 
-		$number = isset($number) ? $number : static::_find_migration_number();
+		$number = isset($number) ? $number : static::generate_migration_number();
 		$filepath = $base_path.'migrations/'.$number.'_'.strtolower($migration_name).'.php';
 
 		static::create($filepath, $migration, 'migration');
@@ -2021,42 +2021,9 @@ CLASS;
 	/**
 	 *
 	 */
-	private static function _find_migration_number()
+	private static function generate_migration_number()
 	{
-		$base_path = APPPATH;
-
-		if ($module = \Cli::option('module'))
-		{
-			if ( ! ($base_path = \Module::exists($module)) )
-			{
-				throw new Exception('Module ' . $module . ' was not found within any of the defined module paths');
-			}
-		}
-
-		$files = new \GlobIterator($base_path .'migrations/*_*.php');
-		if ($files->count())
-		{
-			try
-			{
-				$migrations = array();
-				foreach($files as $file)
-				{
-					$migrations[] = $file->getPathname();
-				}
-				sort($migrations);
-				list($last) = explode('_', basename(end($migrations)));
-			}
-			catch (\LogicException $e)
-			{
-				throw new Exception("Unable to read existing migrations. Path does not exist, or you may have an 'open_basedir' defined");
-			}
-		}
-		else
-		{
-			$last = 0;
-		}
-
-		return str_pad($last + 1, 3, '0', STR_PAD_LEFT);
+		return (new \DateTime('now', new \DateTimeZone('UTC')))->format(\Migrate::get_timestamp_format());
 	}
 
 	/**

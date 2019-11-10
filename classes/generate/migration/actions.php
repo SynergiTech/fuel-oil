@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.8
+ * @version    1.9-dev
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2017 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Oil;
@@ -127,7 +125,7 @@ UP;
 					$field[] = $fidx['column'];
 				}
 				$unique = reset($idx);
-				$unique = $unique['unique'] ? ' UNUQUE' : '';
+				$unique = $unique['unique'] ? ' UNIQUE' : '';
 				$field = implode(', ', $field);
 				$up .= PHP_EOL."\t\t\\DB::query('CREATE{$unique} INDEX {$name} ON {$table_prefix}{$subjects[1]}({$field})')->execute();";
 				$down .= PHP_EOL."\t\t\\DB::query('DROP INDEX {$name} ON {$table_prefix}{$subjects[1]}')->execute();";

@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.8
+ * @version    1.9-dev
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2017 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Fuel\Tasks;
@@ -19,7 +17,7 @@ namespace Fuel\Tasks;
  *
  * Based on https://github.com/mp-php/fuel-myapp/blob/master/tasks/scafdb.php
  *
- * @author     Mamoru Otsuka http://madroom-project.blogspot.jp/
+ * @author     Mamoru Otsuka https://madroom-project.blogspot.jp/
  * @copyright  2012 Mamoru Otsuka
  * @license    WTFPL http://sam.zoy.org/wtfpl/COPYING
  */

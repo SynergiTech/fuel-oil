@@ -1,15 +1,13 @@
 <?php
 /**
- * Fuel
- *
- * Fuel is a fast, lightweight, community driven PHP5 framework.
+ * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
  * @package    Fuel
- * @version    1.8
+ * @version    1.9-dev
  * @author     Fuel Development Team
  * @license    MIT License
- * @copyright  2010 - 2017 Fuel Development Team
- * @link       http://fuelphp.com
+ * @copyright  2010 - 2019 Fuel Development Team
+ * @link       https://fuelphp.com
  */
 
 namespace Oil;
@@ -874,31 +872,22 @@ VIEW;
 			}
 		}
 
-		$migrations = new \GlobIterator($base_path.'migrations/*_'.$migration_name.'*');
-
-		try
+		$duplicates = array();
+		foreach($migrations = new \GlobIterator($base_path.'migrations/*_'.$migration_name.'*') as $migration)
 		{
-			$duplicates = array();
-			foreach($migrations as $migration)
+			// check if it's really a duplicate
+			$part = explode('_', basename($migration->getFilename(), '.php'), 2);
+			if ($part[1] != $migration_name)
 			{
-				// check if it's really a duplicate
-				$part = explode('_', basename($migration->getFilename(), '.php'), 2);
-				if ($part[1] != $migration_name)
+				$part = substr($part[1], strlen($migration_name)+1);
+				if ( ! is_numeric($part))
 				{
-					$part = substr($part[1], strlen($migration_name)+1);
-					if ( ! is_numeric($part))
-					{
-						// not a numbered suffix, but the same base classname
-						continue;
-					}
+					// not a numbered suffix, but the same base classname
+					continue;
 				}
-
-				$duplicates[] = $migration->getPathname();
 			}
-		}
-		catch (\LogicException $e)
-		{
-			throw new Exception("Unable to read existing migrations. Path does not exist, or you may have an 'open_basedir' defined");
+
+			$duplicates[] = $migration->getPathname();
 		}
 
 		// save the migration name, it's also used as table name
@@ -1215,7 +1204,7 @@ Note that the next two lines are equivalent:
   php oil g scaffold/orm <modelname> ...
 
 Documentation:
-  http://docs.fuelphp.com/packages/oil/generate.html
+  https://docs.fuelphp.com/packages/oil/generate.html
 HELP;
 
 		\Cli::write($output);
@@ -1258,7 +1247,7 @@ HELP;
 	"type": "fuel-package",
 	"description": "{$class_name} package",
 	"keywords": [""],
-	"homepage": "http://fuelphp.com",
+	"homepage": "https://fuelphp.com",
 	"license": "MIT",
 	"authors": [
 		{
